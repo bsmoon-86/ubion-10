@@ -303,7 +303,7 @@ students$midturm >= 80 -> flag3
 students$final >= 80 -> flag4
 
 ## 두개의 조건식이 모두 만족하는 학생의 정보 출력 
-students[flag3 & flag4]
+students[flag3 & flag4,]
 flag3 & flag4
 students
 
