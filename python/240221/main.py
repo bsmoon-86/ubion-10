@@ -123,5 +123,6 @@ def corona():
     else:
         return "Service Key Error"
 # http://127.0.0.1:8080/corona?serviceKey=aaa&_limit=1
+    # http://172.16.12.155:8080
 ## 웹 서버를 시작 
 app.run(host="0.0.0.0" , port = 8080, debug=True)
