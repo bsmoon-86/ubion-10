@@ -18,7 +18,10 @@ def create_band(
         df.index = pd.to_datetime(df.index, format='%Y-%m-%d')
         # 시작시간과 종료 시간은 시계열로 변경 
         try:
-                start = datetime.strptime(_start, '%Y-%m-%d')
+                if type(_start) == 'str':
+                    start = datetime.strptime(_start, '%Y-%m-%d')
+                else:
+                    start = _start
                 if type(_end) == "str":
                         end = datetime.strptime(_end, '%Y-%m-%d')
                 else:
@@ -57,7 +60,8 @@ def create_trade(_df):
             df.loc[i, 'trade'] = "buy"
         # 밴드 사이에 col의 값이 존재한다면
         else:
-            df.loc[i, 'trade'] = df.shift().loc[i, 'trade']
+            if df.shift().loc[i, 'trade'] == "":
+                df.loc[i, 'trade'] = df.shift().loc[i, 'trade']
     return df
 
 # 세번째 함수 생성 

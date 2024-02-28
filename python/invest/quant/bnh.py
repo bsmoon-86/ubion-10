@@ -14,7 +14,10 @@ def buyandhold(
         _end = datetime.now()):
     try:
         # _start 는 시계열 데이터로 변경 
-        start = datetime.strptime(_start, '%Y-%m-%d')
+        if type(_start) == 'str':
+            start = datetime.strptime(_start, '%Y-%m-%d')
+        else:
+            start = _start
         # _end는 문자형 데이터라면 시계열로 변경 
         # 시계열 데이터라면 end 변수에 _end를 그대로 대입
         if type(_end) == 'str':

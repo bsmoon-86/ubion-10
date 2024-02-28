@@ -42,11 +42,18 @@ def create_month(
     df = _df.loc[flag,]
     df['BF1'] = df.shift()[col].fillna(0)
     df['BF2'] = df.shift(_momentum)[col].fillna(0)
-    start = datetime.strptime(_start, '%Y-%m-%d')
-    if type(_end) == "str":
-        end = datetime.strptime(_end, '%Y-%m-%d')
-    else:
-        end = _end
+    # 시작시간과 종료 시간은 시계열로 변경 
+    try:
+            if type(_start) == 'str':
+                start = datetime.strptime(_start, '%Y-%m-%d')
+            else:
+                start = _start
+            if type(_end) == "str":
+                    end = datetime.strptime(_end, '%Y-%m-%d')
+            else:
+                    end = _end
+    except:
+            return "인자값의 타입이 잘못되었습니다.(예 : YYYY-mm-dd)"
     df = df.loc[start:end,]
     return df
 

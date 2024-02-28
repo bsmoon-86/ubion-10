@@ -6,6 +6,13 @@ from invest.quant import momentum as mmt
 from datetime import datetime
 import pandas as pd
 import numpy as np
+
+import importlib
+importlib.reload(bnh)
+importlib.reload(boll)
+importlib.reload(hw)
+importlib.reload(mmt)
+
 class Invest:
     # 생성자 함수 : class를 생성할때 최초로 한번 실행이 되는 함수
     def __init__(
@@ -33,5 +40,19 @@ class Invest:
         except:
             print('투자기간 인자값의 포멧이 잘못되었습니다. (YYYY-mm-dd)')
         self.col = _col
+    
+    def buyandhold(self):
+        result , acc_rtn = bnh.buyandhold(self.df, self.col ,self.start, self.end)
+        print(acc_rtn)
+        return result, acc_rtn
+    
+    def bollinger(self, _cnt = 20):
+        # 밴드를 생성하는 함수 호출 
+        band_df = boll.create_band(
+            self.df, self.col, self.start, self.end, _cnt)
+        # 거래 내역을 추가하는 함수 호출 
+        trade_df = boll.create_trade(band_df)
+        # 수익율 계산하는 함수 호출 
+        result , acc_rtn = boll.create_rtn(trade_df)
 
-        
+        return result, acc_rtn
