@@ -56,3 +56,12 @@ class Invest:
         result , acc_rtn = boll.create_rtn(trade_df)
 
         return result, acc_rtn
+    
+    def halloween(self, _month=11):
+        # 시작 년도 
+        h_start = self.start.year
+        # 종료 년도
+        h_end = self.end.year
+        result, acc_rtn = hw.six_month(self.df, self.col, h_start, h_end, _month)
+        return result, acc_rtn
+

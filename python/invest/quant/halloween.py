@@ -4,6 +4,7 @@ from dateutil.relativedelta import relativedelta
 
 ## 할로윈 전략을 함수화 
 def six_month(_df, 
+              _col,
               _start = 2000, 
               _end = datetime.now().year, 
               _month = 11):
@@ -11,7 +12,7 @@ def six_month(_df,
     if 'Date' in df.columns:
         df.set_index('Date', inplace=True) 
     df.index = pd.to_datetime(df.index, format='%Y-%m-%d')
-    df = df[['Open', 'Close']]
+    df = df[[_col]]
     # 비어있는 데이터프레임 생성
     result = pd.DataFrame()
     for i in range(_start, _end):
@@ -29,8 +30,8 @@ def six_month(_df,
     # 수익율 계산
     result['rtn'] = 1
     for i in range(1,len(result),2):
-        rtn = result.iloc[i,]['Close'] / result.iloc[i-1,]['Open']
-        result.iloc[i, 2] = rtn
+        rtn = result.iloc[i,][_col] / result.iloc[i-1,][_col]
+        result.iloc[i, 1] = rtn
     # 누적 수익율을 계산
     result['acc_rtn'] = result['rtn'].cumprod()
     # 총 누적수익율을 변수에 저장
