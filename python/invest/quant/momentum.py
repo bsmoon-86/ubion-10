@@ -76,7 +76,7 @@ def create_rtn(_df1, _df2, _score = 1):
             signal = 'buy'
         
         _df1.loc[i:, 'trade'] = signal
-        print(f"날짜 : {i}, 모멘텀 인덱스 : {momentum_index}, flag : {flag}, signal : {signal}")
+        # print(f"날짜 : {i}, 모멘텀 인덱스 : {momentum_index}, flag : {flag}, signal : {signal}")
     # 수익율 계산
     col = _df1.columns[0]
 
@@ -90,7 +90,7 @@ def create_rtn(_df1, _df2, _score = 1):
             sell = _df1.loc[i, col]
             rtn = sell / buy
             _df1.loc[i, 'rtn'] = rtn
-            print(f"매도일 : {i}, 매도가 : {sell}, 수익율 : {rtn}")
+            # print(f"매도일 : {i}, 매도가 : {sell}, 수익율 : {rtn}")
     # 누적수익율 계산
     _df1['acc_rtn'] = _df1['rtn'].cumprod()
 

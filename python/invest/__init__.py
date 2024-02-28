@@ -6,12 +6,27 @@ from invest.quant import momentum as mmt
 from datetime import datetime
 import pandas as pd
 import numpy as np
+import yfinance as yf
 
 import importlib
 importlib.reload(bnh)
 importlib.reload(boll)
 importlib.reload(hw)
 importlib.reload(mmt)
+
+AAPL = pd.read_csv(
+    r"C:\Users\moons\Documents\GitHub\ubion-10\python\invest\data\AAPL.csv", 
+    index_col='Date')
+AMZN = pd.read_csv(
+    r"C:\Users\moons\Documents\GitHub\ubion-10\python\invest\data\AMZN.csv", 
+    index_col='Date')
+BND = pd.read_csv(
+    r"C:\Users\moons\Documents\GitHub\ubion-10\python\invest\data\BND.csv", 
+    index_col='Date')
+
+def load_data(ticker, _start = "2010-01-01"):
+    result = yf.download(ticker, start=_start)
+    return result
 
 class Invest:
     # 생성자 함수 : class를 생성할때 최초로 한번 실행이 되는 함수
@@ -42,7 +57,8 @@ class Invest:
         self.col = _col
     
     def buyandhold(self):
-        result , acc_rtn = bnh.buyandhold(self.df, self.col ,self.start, self.end)
+        result , acc_rtn = bnh.buyandhold(
+            self.df, self.col ,self.start, self.end)
         print(acc_rtn)
         return result, acc_rtn
     
@@ -63,5 +79,12 @@ class Invest:
         # 종료 년도
         h_end = self.end.year
         result, acc_rtn = hw.six_month(self.df, self.col, h_start, h_end, _month)
+        return result, acc_rtn
+    
+    def momentum(self, _momentum = 12, _score = 1, _select = 1):
+        ym_df = mmt.create_YM(self.df, self.col)
+        month_df = mmt.create_month(
+            ym_df, self.start, self.end, _momentum, _select)
+        result, acc_rtn = mmt.create_rtn(ym_df, month_df, _score)
         return result, acc_rtn
 

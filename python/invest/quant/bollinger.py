@@ -78,7 +78,7 @@ def create_rtn(_df):
         if (df.shift().loc[i, 'trade'] == "") & \
             (df.loc[i, 'trade'] == "buy"):
             buy = df.loc[i, col]
-            print(f'매수일 : {i}, 매수가 : {buy}')
+            # print(f'매수일 : {i}, 매수가 : {buy}')
         # 판매
         elif (df.shift().loc[i, 'trade'] == "buy") & \
             (df.loc[i, 'trade'] == ""):
@@ -88,7 +88,7 @@ def create_rtn(_df):
             # 수익율 대입 
             df.loc[i, 'rtn'] = rtn
             # 출력 
-            print(f'매도일 : {i}, 매도가 : {sell}, 수익율 : {rtn}')
+            # print(f'매도일 : {i}, 매도가 : {sell}, 수익율 : {rtn}')
     df['acc_rtn'] = df['rtn'].cumprod()
     # 최종 누적수익율을 출력
     acc_rtn = df['acc_rtn'][-1]
